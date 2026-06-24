@@ -9,9 +9,7 @@ on:
 
 jobs:
   build-with-jdk-23:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 23
@@ -23,3 +21,11 @@ jobs:
     - name: Build / Test with Maven
       run: mvn -B test
 
+  snyk-security-scanning:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/maven@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
